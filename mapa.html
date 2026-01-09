@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Mapa de Ocorrências</title>
+    <link rel="stylesheet" href="/static/css/theme.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <style>
+      #map { height: 500px; margin-top: 10px; }
+      label { display: inline-block; margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <h1>Mapa de Ocorrências</h1>
+    <a href="/index">← Voltar</a><br><br>
+    <input type="text" id="address" placeholder="Buscar endereço">
+    <button id="searchBtn">Buscar</button>
+
+    <div id="map"></div>
+
+    <form id="formOcorrencia">
+        <label>Tipo: <input type="text" id="tipo" required></label><br>
+        <label>Prioridade:
+            <select id="prioridade" required>
+                <option value="">Selecione</option>
+                <option>Baixa</option>
+                <option>Média</option>
+                <option>Alta</option>
+            </select>
+        </label><br>
+        <label>Endereço: <input type="text" id="endereco" required></label><br>
+        <input type="hidden" id="latitude">
+        <input type="hidden" id="longitude"><br>
+        <button id="salvarBtn" type="button">Salvar Ocorrência</button>
+    </form>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="">
+    </script>
+    <script src="/static/js/mapa.js"></script>
+</body>
+</html>

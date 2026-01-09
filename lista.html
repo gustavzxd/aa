@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Ocorrências</title>
+    <link rel="stylesheet" href="/static/css/theme.css">
+</head>
+<body>
+    <h1>Ocorrências</h1>
+    <a href="/index">← Voltar ao Painel</a>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th><th>Data</th><th>Hora</th><th>Tipo</th>
+                <th>Prioridade</th><th>Endereço</th><th>Ação</th>
+            </tr>
+        </thead>
+        <tbody id="corpo"></tbody>
+    </table>
+
+    <script>
+    // Carrega e mostra as ocorrências via API
+    function carregar() {
+        fetch('/ocorrencias', { credentials: 'same-origin' })
+        .then(r => r.json())
+        .then(d => {
+            const corpo = document.getElementById("corpo");
+            corpo.innerHTML = "";
+            if (!d || d.error || d.length === 0) {
+                const tr = document.createElement('tr');
+                const td = document.createElement('td');
+                td.colSpan = 7;
+                td.textContent = "Nenhuma ocorrência";
+                tr.appendChild(td);
+                corpo.appendChild(tr);
+                return;
+            }
+            d.forEach(o => {
+                const tr = document.createElement("tr");
+                // ID
+                const tdId = document.createElement("td");
+                tdId.textContent = o.id;
+                tr.appendChild(tdId);
+                // Data
+                const tdData = document.createElement("td");
+                tdData.textContent = o.data;
+                tr.appendChild(tdData);
+                // Hora
+                const tdHora = document.createElement("td");
+                tdHora.textContent = o.hora;
+                tr.appendChild(tdHora);
+                // Tipo
+                const tdTipo = document.createElement("td");
+                tdTipo.textContent = o.tipo;
+                tr.appendChild(tdTipo);
+                // Prioridade
+                const tdPrio = document.createElement("td");
+                tdPrio.textContent = o.prioridade;
+                tr.appendChild(tdPrio);
+                // Endereço
+                const tdEnd = document.createElement("td");
+                tdEnd.textContent = o.endereco;
+                tr.appendChild(tdEnd);
+                // Ação: botão Excluir
+                const tdAcao = document.createElement("td");
+                const btn = document.createElement("button");
+                btn.textContent = "Excluir";
+                btn.onclick = () => excluir(o.id);
+                tdAcao.appendChild(btn);
+                tr.appendChild(tdAcao);
+                corpo.appendChild(tr);
+            });
+        });
+    }
+
+    function excluir(id) {
+        if (!confirm("Excluir ocorrência?")) return;
+        fetch('/excluir_ocorrencia', {
+            method: "POST",
+            credentials: 'same-origin',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: id })
+        }).then(res => {
+            if (res.ok) carregar();
+        });
+    }
+
+    carregar();
+    </script>
+</body>
+</html>

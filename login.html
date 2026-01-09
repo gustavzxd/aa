@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="/static/css/theme.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <input id="user" placeholder="Usuário">
+        <input id="pass" type="password" placeholder="Senha">
+        <button class="btn" onclick="entrar()">Entrar</button>
+        <p id="erro" style="display:none;color:#ff4444;margin-top:10px;">
+            Credenciais inválidas
+        </p>
+    </div>
+    <script src="/static/js/login.js"></script>
+</body>
+</html>
+
+<input id="user" placeholder="Usuário">
+<input id="pass" type="password" placeholder="Senha" onkeyup="if(event.key==='Enter') entrar()">
+<button class="btn" onclick="entrar()">Entrar</button>
